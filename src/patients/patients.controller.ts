@@ -7,7 +7,7 @@ import { UpdatePatientDto } from './dto/update-patient.dto';
 export class PatientsController {
   constructor(private readonly svc: PatientsService) {}
 
-  @Post()
+  @Post("addPatient")
   create(@Body() body: CreatePatientDto) {
     console.log("create patient api", CreatePatientDto);
     return this.svc.create(body);

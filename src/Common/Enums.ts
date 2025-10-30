@@ -1,1 +1,0 @@
-export const POSTGRESQL_DATABASE_URL = "postgresql://postgres:atik%40123@localhost:5432/poc_patient_db";

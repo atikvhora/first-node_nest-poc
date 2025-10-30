@@ -1,7 +1,6 @@
 import { Injectable, OnModuleDestroy, OnApplicationShutdown } from '@nestjs/common';
 import { Pool } from 'pg';
 import { drizzle } from 'drizzle-orm/node-postgres';
-import { POSTGRESQL_DATABASE_URL } from 'src/Common/Enums';
 
 @Injectable()
 export class DrizzleService implements OnModuleDestroy, OnApplicationShutdown {
@@ -11,8 +10,7 @@ export class DrizzleService implements OnModuleDestroy, OnApplicationShutdown {
 
   constructor() {
     const connectionString =
-      process.env.DATABASE_URL ?? POSTGRESQL_DATABASE_URL;
-
+      'postgresql://postgres:atik%40123@localhost:5432/poc_patient_db';
     this.pool = new Pool({ connectionString });
     this.db = drizzle(this.pool);
   }
