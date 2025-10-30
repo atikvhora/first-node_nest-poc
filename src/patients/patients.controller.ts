@@ -9,6 +9,7 @@ export class PatientsController {
 
   @Post()
   create(@Body() body: CreatePatientDto) {
+    console.log("create patient api", CreatePatientDto);
     return this.svc.create(body);
   }
 
