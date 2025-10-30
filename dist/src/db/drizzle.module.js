@@ -6,15 +6,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppService = void 0;
+exports.DrizzleModule = exports.DRIZZLE = void 0;
 const common_1 = require("@nestjs/common");
-let AppService = class AppService {
-    getHello() {
-        return 'Hello World!';
-    }
+const drizzle_service_1 = require("./drizzle.service");
+exports.DRIZZLE = 'DRIZZLE';
+let DrizzleModule = class DrizzleModule {
 };
-exports.AppService = AppService;
-exports.AppService = AppService = __decorate([
-    (0, common_1.Injectable)()
-], AppService);
-//# sourceMappingURL=app.service.js.map
+exports.DrizzleModule = DrizzleModule;
+exports.DrizzleModule = DrizzleModule = __decorate([
+    (0, common_1.Global)(),
+    (0, common_1.Module)({
+        providers: [drizzle_service_1.DrizzleService, { provide: exports.DRIZZLE, useExisting: drizzle_service_1.DrizzleService }],
+        exports: [drizzle_service_1.DrizzleService, exports.DRIZZLE],
+    })
+], DrizzleModule);
+//# sourceMappingURL=drizzle.module.js.map

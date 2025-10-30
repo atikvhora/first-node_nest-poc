@@ -97,3 +97,36 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 "# first-node_nest-poc" 
+
+## Postgres + Drizzle setup
+
+This project includes a small Nest module that provides a Drizzle client backed by a `pg` Pool.
+
+1) Install the runtime dependencies:
+
+```powershell
+npm install pg drizzle-orm drizzle-orm/pg-core drizzle-orm/node-postgres
+```
+
+Note: package names and imports depend on the Drizzle version. If your Drizzle version exposes different entry points, adjust imports in `src/db/*` accordingly.
+
+2) Configure your database connection using an environment variable named `DATABASE_URL`, for example:
+
+```powershell
+#$env:DATABASE_URL = "postgresql://postgres:postgres@localhost:5432/postgres"
+```
+
+3) The module exports a provider token `DRIZZLE` that you can inject anywhere in your app:
+
+```ts
+import { Inject } from '@nestjs/common';
+
+constructor(@Inject('DRIZZLE') private readonly db) {}
+
+// use `db` with Drizzle methods
+```
+
+Files added:
+- `src/db/drizzle.module.ts` — global Nest module that creates and exports the Drizzle client
+- `src/db/schema.ts` — small example table definition (cats)
+
