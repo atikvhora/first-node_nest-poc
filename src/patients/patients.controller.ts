@@ -7,13 +7,12 @@ import { UpdatePatientDto } from './dto/update-patient.dto';
 export class PatientsController {
   constructor(private readonly svc: PatientsService) {}
 
-  @Post("addPatient")
+  @Post("AddPatient")
   create(@Body() body: CreatePatientDto) {
-    console.log("create patient api", CreatePatientDto);
     return this.svc.create(body);
   }
 
-  @Get()
+  @Get("GetAllPatient")
   findAll() {
     return this.svc.findAll();
   }
@@ -28,7 +27,7 @@ export class PatientsController {
     return this.svc.update(id, body);
   }
 
-  @Delete(':id')
+  @Delete('DeletePatient/:id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.svc.remove(id);
   }

@@ -33,7 +33,7 @@ export class PatientsService {
     const created = await this.drizzleService.db.transaction(async (tx) => {
       const res = await tx.insert(patients).values(patientData).returning();
       const patientRow = res[0];
-      const patientRes = { Id: patientRow.Id };
+      const patientRes = { id: patientRow.id };
       // if any address field is present, insert a single address row
       if (address1 || city || pincode || country) {
         await tx.insert(addressesTable).values({ patientId: patientRow.id, address1, city, pincode, country } as any);
