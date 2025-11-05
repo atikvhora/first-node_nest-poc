@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { DrizzleService } from '../db/drizzle.service';
-import { patients, addresses as addressesTable } from '../db/schema';
+import { patients, addresses as addressesTable, addresses } from '../db/schema';
 import { eq } from 'drizzle-orm';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
@@ -12,6 +12,7 @@ export interface Patient {
   email?: string;
   gender?: string;
   phone?: string;
+  address: Address;
 }
 
 export interface Address {
@@ -44,7 +45,13 @@ export class PatientsService {
   }
 
   async findAll(): Promise<Patient[]> {
-    return (await this.drizzleService.db.select().from(patients)) as Patient[];
+    // const address = await this.drizzleService.db.select().from(addresses).where(eq(addresses.patientId, id));
+    return (await this.drizzleService.db.select({
+      ...patients,
+      address: {
+        ...addressesTable,
+      }
+    }).from(patients).leftJoin(addresses, eq(addresses.patientId, patients.id))) as Patient[];
   }
 
   async findOne(id: number): Promise<Patient> {
