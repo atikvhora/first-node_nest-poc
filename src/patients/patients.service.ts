@@ -55,7 +55,11 @@ export class PatientsService {
   }
 
   async findOne(id: number): Promise<Patient> {
-    const rows = await this.drizzleService.db.select().from(patients).where(eq(patients.id, id));
+    const rows = await this.drizzleService.db.select({
+       ...patients,
+      address: {
+        ...addressesTable,
+      }}).from(patients).leftJoin(addresses, eq(addresses.patientId, patients.id)).where(eq(patients.id, id)) as Patient;
     const row = rows[0];
     if (!row) throw new NotFoundException('Patient not found');
     return row as Patient;

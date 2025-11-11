@@ -18,8 +18,8 @@ export class PushNotificationService {
     );
   }
 
-  async subscribe(body: webPush.PushSubscription) : Promise<string> {
-    return "";
+  async subscribe(body: webPush.PushSubscription) : Promise<boolean> {
+    return true;
   }
 
   async sendNotification(subscription: webPush.PushSubscription, payload: any): Promise<pushResponse> {

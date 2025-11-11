@@ -1,7 +1,8 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, ParseIntPipe } from '@nestjs/common';
-import { PatientsService } from './patients.service';
+import { Patient, PatientsService } from './patients.service';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
+import { ApiResponse } from './dto/api-response.dto';
 
 @Controller('patients')
 export class PatientsController {
@@ -18,8 +19,9 @@ export class PatientsController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.svc.findOne(id);
+  async findOne(@Param('id', ParseIntPipe) id: number) : Promise<ApiResponse<Patient>> {
+    const patientData = await this.svc.findOne(id);
+    return new ApiResponse(200,"Patient Found", patientData);
   }
 
   @Put(':id')

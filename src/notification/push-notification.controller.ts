@@ -15,6 +15,7 @@ export class PushNotificationController {
   @Post('send')
   async sendPushNotification(@Body() body: { subscription: webPush.PushSubscription; payload: any; }) {
         console.log("body of Controller", body);
-    return this.pushService.sendNotification(body.subscription, body.payload);
+    await this.pushService.sendNotification(body.subscription, body.payload);
+    return { success: true };
   }
 }
