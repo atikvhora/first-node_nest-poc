@@ -33,4 +33,15 @@ export class PatientsController {
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.svc.remove(id);
   }
+
+  @Post('sp_add_patient')
+  async spAddPatient(
+    @Body('Name') Name: string,
+    @Body('UserName') UserName: string,
+    @Body('Email') Email: string,
+    @Body('Gender') Gender: string,
+    @Body('Phone') Phone: string
+  ) {
+      return this.svc.spAddPatient(Name, UserName, Email, Gender, Phone);
+  }
 }

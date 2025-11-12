@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { DrizzleService } from '../db/drizzle.service';
 import { patients, addresses as addressesTable, addresses } from '../db/schema';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
 
@@ -106,4 +106,8 @@ export class PatientsService {
     return true;
   }
   
+  async spAddPatient(Name: string, UserName: string, Email: String, Gender: String, Phone: String): Promise<any> {
+    const result = await this.drizzleService.db.execute(sql`CALL sp_add_patient(${Name}, ${UserName}, ${Email}, ${Gender}, ${Phone});`);
+    return true; // result depends on the procedure’s definition
+  }
 }
